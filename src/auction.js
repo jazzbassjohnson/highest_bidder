@@ -21,6 +21,16 @@ Auction.prototype.$newBidder = function(startingBid, maximumBid, automaticIncrem
     bidder.startingBid = startingBid;
     bidder.maximumBid = maximumBid;
     bidder.automaticIncrementAmount = automaticIncrementAmount;
-    this.$$biddersCollection.push(bidder);
+    bidder.root = this;
+    bidder.$destroy = function() {
+        var self = this;
+        var indexOfSelf = self.root.$$biddersCollection.indexOf(self);
+        if(indexOfSelf >=0) {
+            self.root.$$biddersCollection.splice(indexOfSelf, 1);
+        }
+
+    };
+    bidder.root.$$biddersCollection.push(bidder);
     return bidder;
 };
+
