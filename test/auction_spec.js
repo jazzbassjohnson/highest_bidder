@@ -33,6 +33,13 @@ describe("Auction", function() {
       expect(entry.startingPrice).toBe(price);
     });
 
+    it("stores each new entry in an array on the constructor", function() {
+      var entry1 = auction.$newEntry();
+      var entry2 = auction.$newEntry();
+
+      expect(auction.$$entriesCollection).toBe([entry1, entry2]);
+    });
+
   });
   
 });
