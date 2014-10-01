@@ -84,6 +84,18 @@ describe("Auction", function() {
       expect(auctionInstance.$$biddersCollection[0]).toBe(bidder);
     });
 
+    it("returns an instance of bidder capable of removing itself from the Auction's storage", function() {
+      var bidder = auctionInstance.$newBidder(startingBid, maximumBid, automaticIncrementAmount);
+
+      expect(auctionInstance.$$biddersCollection[0]).toBe(bidder);
+
+      bidder.$destroy();
+
+      expect(auctionInstance.$$biddersCollection.indexOf(bidder)).toBe(-1);
+
+
+    });
+
   })
   
 });
