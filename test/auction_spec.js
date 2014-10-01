@@ -65,7 +65,17 @@ describe("Auction", function() {
       expect(bidder.aValue).toBe('something');
     });
 
+    it("takes and 3 parameters, startingBid, maximumBid, and automaticIncrementAmount and returns them in an object", function() {
+      var startingBid = 50;
+      var maximumBid= 80;
+      var automaticIncrementAmount = 3
 
+      var bidder = auctionInstance.$newBidder(startingBid, maximumBid, automaticIncrementAmount);
+      
+      expect(bidder.startingBid).toBe(startingBid);
+      expect(bidder.maximumBid).toBe(maximumBid);
+      expect(bidder.automaticIncrementAmount).toBe(automaticIncrementAmount);
+    });
 
   })
   
