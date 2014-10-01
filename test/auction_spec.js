@@ -1,5 +1,5 @@
 /* jshint globalstrict: true*/
-/* global Scope: false*/
+/* global Auction: false*/
 
 'use strict';
 
@@ -11,6 +11,17 @@ describe("Auction", function() {
 
     expect(auction.aProperty).toBe(1);
   });
-  
+  describe("$newEntry", function() {
+    var auction;
+    beforeEach(function() {
+      auction = new Auction();
+    });
+
+    it("returns an object", function() {
+      var entry = auction.$newEntry();
+
+      expect(typeof entry).toBe('object');
+    });
+  });
   
 });
