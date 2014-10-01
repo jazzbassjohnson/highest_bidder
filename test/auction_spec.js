@@ -52,18 +52,21 @@ describe("Auction", function() {
 
   });
 
-  describe("$BidderConstructor", function() {
+  describe("$newBidder", function() {
     var auctionInstance;
     beforeEach(function() {
       auctionInstance = new Auction();
     });
 
     it("returns a bidder instance that can hold properties like and object", function() {
-      var bidder = new auctionInstance.$BidderConstructor();
+      var bidder = auctionInstance.$newBidder();
       bidder.aValue = 'something';
 
       expect(bidder.aValue).toBe('something');
     });
+
+
+
   })
   
 });
