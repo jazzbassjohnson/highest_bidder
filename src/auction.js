@@ -4,6 +4,7 @@
 
 function Auction() {
   this.$$entriesCollection = [];
+  this.$$biddersCollection = [];
 }
 
 Auction.prototype.$newEntry = function(nameOfItem,  startingPrice) {
@@ -20,6 +21,6 @@ Auction.prototype.$newBidder = function(startingBid, maximumBid, automaticIncrem
     bidder.startingBid = startingBid;
     bidder.maximumBid = maximumBid;
     bidder.automaticIncrementAmount = automaticIncrementAmount;
-
+    this.$$biddersCollection.push(bidder);
     return bidder;
 };
