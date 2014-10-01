@@ -14,3 +14,12 @@ Auction.prototype.$newEntry = function(nameOfItem,  startingPrice) {
 
     return entry;
 };
+
+Auction.prototype.$newBidder = function(startingBid, maximumBid, automaticIncrementAmount){
+    var bidder = {};
+    bidder.startingBid = startingBid;
+    bidder.maximumBid = maximumBid;
+    bidder.automaticIncrementAmount = automaticIncrementAmount;
+
+    return bidder;
+};
