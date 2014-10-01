@@ -53,8 +53,12 @@ describe("Auction", function() {
   });
 
   describe("$newBidder", function() {
-    var auctionInstance;
+    var auctionInstance, startingBid, maximumBid, automaticIncrementAmount;
+
     beforeEach(function() {
+      startingBid = 50;
+      maximumBid = 80;
+      automaticIncrementAmount = 3;
       auctionInstance = new Auction();
     });
 
@@ -66,15 +70,18 @@ describe("Auction", function() {
     });
 
     it("takes and 3 parameters, startingBid, maximumBid, and automaticIncrementAmount and returns them in an object", function() {
-      var startingBid = 50;
-      var maximumBid= 80;
-      var automaticIncrementAmount = 3
-
+      
       var bidder = auctionInstance.$newBidder(startingBid, maximumBid, automaticIncrementAmount);
       
       expect(bidder.startingBid).toBe(startingBid);
       expect(bidder.maximumBid).toBe(maximumBid);
       expect(bidder.automaticIncrementAmount).toBe(automaticIncrementAmount);
+    });
+
+    it("stores the instance of the bidder on the Auction constructor", function() {
+      var bidder = auctionInstance.$newBidder(startingBid, maximumBid, automaticIncrementAmount);
+
+      expect(auctionInstance.$$biddersCollection[0]).toBe(bidder);
     });
 
   })
