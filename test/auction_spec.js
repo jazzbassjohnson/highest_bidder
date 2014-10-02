@@ -49,9 +49,15 @@ describe("Auction", function() {
       var bidder = toaster.newBidder(30, 50, 3);
       expect(toaster.$$biddersCollection[0]).toBe(bidder);
     });
-   
 
+    it("gives each bidder a unique bidder_id", function() {
+      var bidder1 = toaster.newBidder(30, 50, 3);
+      var bidder2 = toaster.newBidder(40, 60, 5);
+
+      expect(bidder1.bidder_id).toBe(0);
+      expect(bidder2.bidder_id).toBe(1);
+    });
   });
-
+  
   
 });
