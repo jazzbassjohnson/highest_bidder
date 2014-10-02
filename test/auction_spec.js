@@ -22,23 +22,26 @@ describe("Auction", function() {
   });
 
   describe("newBidder", function() {
-    var toaster;
+    var toaster, startingBid, maximumBid, automaticIncrementAmount;
     beforeEach(function() {
-      toaster = new Auction();
+      startingBid = 30;
+      maximumBid = 50;
+      automaticIncrementAmount = 3;
+      toaster = new Auction(40);
     });
 
     it("expects 3 numbers", function() {
-      var bidder = toaster.newBidder(30, 'fish', 3);
+      var bidder = toaster.newBidder(startingBid, 'fish', automaticIncrementAmount);
       expect(bidder).toBe(null);
     });
 
     it("returns an object if the first 3 parameters passed in are numbers", function(){
-      var bidder = toaster.newBidder(30, 50, 3);
+      var bidder = toaster.newBidder(startingBid, maximumBid, automaticIncrementAmount);
       expect(typeof bidder).toBe('object');
     });
 
     it("returns an objects with the 3 properties, startingBid, maximumBid, and automaticIncrementAmount and the parameters passed into it", function() {
-      var bidder = toaster.newBidder(30, 50, 3);
+      var bidder = toaster.newBidder(startingBid, maximumBid, automaticIncrementAmount);
 
       expect(bidder.startingBid).toBe(30);
       expect(bidder.maximumBid).toBe(50);
@@ -46,18 +49,53 @@ describe("Auction", function() {
     });
 
     it("stores the instance on the new bidder on the on its instance off Auction", function() {
-      var bidder = toaster.newBidder(30, 50, 3);
+      var bidder = toaster.newBidder(startingBid, maximumBid, automaticIncrementAmount);
       expect(toaster.$$biddersCollection[0]).toBe(bidder);
     });
 
     it("gives each bidder a unique bidder_id", function() {
-      var bidder1 = toaster.newBidder(30, 50, 3);
+      var bidder1 = toaster.newBidder(startingBid, maximumBid, automaticIncrementAmount);;
       var bidder2 = toaster.newBidder(40, 60, 5);
 
       expect(bidder1.bidder_id).toBe(0);
       expect(bidder2.bidder_id).toBe(1);
     });
   });
-  
+  describe("placeBids", function() {
+    var toaster;
+    beforeEach(function() {
+      toaster = new Auction();
+    });
+
+    it("throws an error if there was no bidders added to collection", function() {
+
+      expect(function() { toaster.placeBids(); }).toThrow();
+    });
+
+    it("returns an object", function() {
+      var bidder = toaster.newBidder(30, 50, 3);
+
+      var winner = toaster.placeBids();
+      expect(typeof winner).toBe('object');
+
+    })
+  });
+  describe("$$findHighestBidder", function() {
+    var toaster, lowestBidder, middleBidder, highestBidder;
+    beforeEach(function() {
+      toaster = new Auction(40);
+      lowestBidder = toaster.newBidder(30, 40, 5);
+      middleBidder = toaster.newBidder(40, 60, 5);
+      highestBidder = toaster.newBidder(50, 100, 5);
+    });
+
+    it("returns the highestBidder of a collection", function() {
+      var result = toaster.$$findHighestBidder([lowestBidder, middleBidder, highestBidder]);
+      expect(result).toBe(highestBidder);
+
+    });
+
+  });
+
   
 });
