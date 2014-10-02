@@ -4,5 +4,5 @@
 
 var AuctionConstructor = function() {
 
-
+    this.$$sellerPrice = null;
 };

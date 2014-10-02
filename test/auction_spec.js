@@ -15,6 +15,6 @@ describe("AuctionConstructor", function() {
     var Auction = new AuctionConstructor();
     expect(Auction.hasOwnProperty('$$sellerPrice')).toBe(true);
   });
-
+  
   
 });
