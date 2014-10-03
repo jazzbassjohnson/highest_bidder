@@ -60,6 +60,21 @@ describe("Auction", function() {
       expect(bidder2.bidder_id).toBe(1);
     });
   });
+  describe ("removeBid", function() {
+    var toaster;
+    beforeEach(function() {
+      toaster = new Auction(40);
+    });
+
+    it("removes the bidder's bid from the bidder collection", function() {
+       var bidder1 = toaster.newBidder(40, 60, 5);
+       var bidder2 = toaster.newBidder(50, 70, 5);
+       var bidder3 = toaster.newBidder(50, 80, 5);
+       expect(toaster.$$biddersCollection.length).toBe(3);
+       bidder2.removeBid();
+       expect(toaster.$$biddersCollection.length).toBe(2);
+    });
+  });
   describe("placeBids", function() {
     var toaster;
     beforeEach(function() {
