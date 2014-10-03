@@ -29,9 +29,16 @@ Auction.prototype.serialize = function(){
 
 Auction.prototype.placeBids = function() {
     var biddersCollection = this.$$biddersCollection;
-    if(!biddersCollection.length) {
+    var collectionLength = biddersCollection.length;
+    if(!collectionLength) {
         throw "There are no bidders for this entry... :/";
     }
+    if(collectionLength === 1) {
+        return {
+            winning_bid: this.$$sellerPrice,
+            bidder_id: 0
+        };
+    } 
     var highestBidder = this.$findHighestBidder(biddersCollection); 
     var secondHighestBid = this.$findSecondHighestBidder(biddersCollection, highestBidder.maximumBid);
 
