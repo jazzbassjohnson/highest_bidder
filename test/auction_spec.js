@@ -30,9 +30,10 @@ describe("Auction", function() {
       toaster = new Auction(40);
     });
 
-    it("expects 3 numbers", function() {
-      var bidder = toaster.newBidder(startingBid, 'fish', automaticIncrementAmount);
-      expect(bidder).toBe(null);
+    it("expects 3 numbers and throws in error if either of the parameters passed in is invalid", function() {
+      expect(function(){
+        toaster.newBidder(startingBid, 'fish', automaticIncrementAmount);
+      }).toThrow();
     });
 
     it("returns an object if the first 3 parameters passed in are numbers", function(){
