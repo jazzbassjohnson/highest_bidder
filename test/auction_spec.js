@@ -64,7 +64,7 @@ describe("Auction", function() {
   describe("placeBids", function() {
     var toaster;
     beforeEach(function() {
-      toaster = new Auction();
+      toaster = new Auction(40);
     });
 
     it("throws an error if there was no bidders added to collection", function() {
@@ -74,11 +74,16 @@ describe("Auction", function() {
 
     it("returns an object", function() {
       var bidder = toaster.newBidder(30, 50, 3);
-
       var winner = toaster.placeBids();
       expect(typeof winner).toBe('object');
+    });
 
-    })
+    it("returns a bidder's winning bid as the amount of the seller's price", function() {
+      var bidder = toaster.newBidder(30, 50, 3);
+      var winner = toaster.placeBids();
+
+      expect(winner.winning_bid).toBe(40);
+    });
   });
   describe("$findHighestBidder", function() {
     var toaster, lowestBidder, middleBidder, highestBidder;
