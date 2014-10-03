@@ -9,18 +9,30 @@ var Auction = function(sellerPrice) {
 
 Auction.prototype.newBidder = function(startingBid, maximumBid, automaticIncrementAmount) {
     if(typeof startingBid !== 'number' || typeof maximumBid !== 'number' || typeof automaticIncrementAmount !== 'number') {
-        return null;
+        throw "Error: User data invalid";
     }
     var self = this;
-    var bidder = {
-        startingBid: startingBid,
-        maximumBid: maximumBid,
-        automaticIncrementAmount: automaticIncrementAmount,
-        bidder_id: self.serialize()
-    };
+    
+    var BidderConstructor = function() {};
+    BidderConstructor.prototype = this;
+    
+    var bidder = new BidderConstructor();
+    bidder.startingBid = startingBid;
+    bidder.maximumBid = maximumBid;
+    bidder.automaticIncrementAmount = automaticIncrementAmount;
+    bidder.bidder_id = self.serialize();
+    bidder.auctionRoom = this;
 
     this.$$biddersCollection.push(bidder);
     return bidder;
+};
+
+Auction.prototype.removeBid = function() {
+    var siblings = this.auctionRoom.$$biddersCollection;
+  var indexOfThis = siblings.indexOf(this);
+  if(indexOfThis >= 0) {
+    siblings.splice(indexOfThis, 1);
+  }
 };
 
 Auction.prototype.serialize = function(){
