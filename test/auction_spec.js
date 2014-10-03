@@ -118,18 +118,30 @@ describe("Auction", function() {
   });
 
   describe("$findwinner", function() {
-    var toaster, lowestBidder, middleBidder, highestBidder;
+    var toaster;
     beforeEach(function() {
       toaster = new Auction(40);
-      lowestBidder = toaster.newBidder(30, 40, 5);
-      middleBidder = toaster.newBidder(40, 62, 5);
-      highestBidder = toaster.newBidder(50, 100, 5);
+      
     });
 
     it("returns the winning bid amount", function() {
       //expects second highest bid, highest bidder's automaticIncrementAmount, and the highest bidder's startingBid
+      var lowestBidder = toaster.newBidder(30, 40, 5);
+      var middleBidder = toaster.newBidder(40, 62, 5);
+      var highestBidder = toaster.newBidder(50, 100, 5);
+      
       var winning_bid = toaster.$findWinner(middleBidder.maximumBid, highestBidder.automaticIncrementAmount, highestBidder.startingBid);
+
       expect(winning_bid).toBe(65);
+    });
+
+    it("returns the the the highest bidder's starting bid if it's greater than the maximum bid of the second highest bidder", function() {
+      var secondHighestBidder = toaster.newBidder(40, 60, 5);
+      var highestBidder = toaster.newBidder(70, 100, 5);
+
+      var winner_bid = toaster.$findWinner(secondHighestBidder.maximumBid, highestBidder.automaticIncrementAmount, highestBidder.startingBid);
+
+      expect(winner_bid).toBe(70);
     });
 
   });
