@@ -59,6 +59,10 @@ describe("Auction", function() {
       expect(bidder1.bidder_id).toBe(0);
       expect(bidder2.bidder_id).toBe(1);
     });
+    
+    it("throws an error it the bidder's proposed maximumBid is too low", function() {
+      expect(function() { var super_low_bidder = toaster.newBidder(20, 30, 5); }).toThrow();
+    });
   });
   describe ("removeBid", function() {
     var toaster;
@@ -110,6 +114,7 @@ describe("Auction", function() {
       var result = toaster.$findHighestBidder([lowestBidder, middleBidder, highestBidder]);
       expect(result).toBe(highestBidder);
     });
+
   });
   describe("$findSecondHighestBidder", function() {
     var toaster, lowestBidder, middleBidder, highestBidder;
