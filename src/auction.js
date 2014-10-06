@@ -11,6 +11,11 @@ Auction.prototype.newBidder = function(startingBid, maximumBid, automaticIncreme
     if(typeof startingBid !== 'number' || typeof maximumBid !== 'number' || typeof automaticIncrementAmount !== 'number') {
         throw "Error: User data invalid";
     }
+
+    if(maximumBid < this.$$sellerPrice) {
+      throw "Bidder's maximum bid is too low to be considered";
+    }
+    
     var self = this;
     
     var BidderConstructor = function() {};
@@ -50,8 +55,10 @@ Auction.prototype.placeBids = function() {
             winning_bid: this.$$sellerPrice,
             bidder_id: 0
         };
-    } 
-    var highestBidder = this.$findHighestBidder(biddersCollection); 
+    }
+
+    var highestBidder = this.$findHighestBidder(biddersCollection);
+
     var secondHighestBid = this.$findSecondHighestBidder(biddersCollection, highestBidder.maximumBid);
 
     var winner = {};
