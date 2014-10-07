@@ -18,9 +18,9 @@ Auction.prototype.newBidder = function(startingBid, maximumBid, automaticIncreme
 
     var bidder = {};
     bidder.startingBid = startingBid;
-    bidder.maximumBid = this.adjustMaximumBid(startingBid, maximumBid, automaticIncrementAmount);
+    bidder.maximumBid = this.$adjustMaximumBid(startingBid, maximumBid, automaticIncrementAmount);
     bidder.automaticIncrementAmount = automaticIncrementAmount;
-    bidder.bidder_id = this.serialize();
+    bidder.bidder_id = this.$serialize();
 
     
     if(!this.$$biddersCollection[bidder.maximumBid]) {
@@ -31,12 +31,12 @@ Auction.prototype.newBidder = function(startingBid, maximumBid, automaticIncreme
 };
 
 // adjusts the maximum bid for each bidder based on their specifications
-Auction.prototype.adjustMaximumBid = function(startingBid, maximumBid, automaticIncrementAmount) {
+Auction.prototype.$adjustMaximumBid = function(startingBid, maximumBid, automaticIncrementAmount) {
   return maximumBid - ((maximumBid - startingBid ) % automaticIncrementAmount);
 };
 
 
-Auction.prototype.serialize = function(){
+Auction.prototype.$serialize = function(){
     var id = this.$$bidderCount;
     this.$$bidderCount++;
     return id;
