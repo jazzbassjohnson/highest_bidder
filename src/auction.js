@@ -12,6 +12,9 @@ Auction.prototype.newBidder = function(startingBid, maximumBid, automaticIncreme
     if(typeof startingBid !== 'number' || typeof maximumBid !== 'number' || typeof automaticIncrementAmount !== 'number') {
         throw "Error: User data invalid";
     }
+    if(startingBid>maximumBid || automaticIncrementAmount > maximumBid) {
+      throw "Error: User data invalid";
+    }
 
     var BidderConstructor = function() {};
     BidderConstructor.prototype = this;
