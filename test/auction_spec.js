@@ -6,9 +6,13 @@
 describe("Auction", function() {
   it("constructs and passes an $$biddersCollection object to each instance", function() {
     var boatAuction = new Auction();
-    expect(typeof boatAuction.$$biddersCollection).toBe('object')
+    // $$biddersCollection is an object on the constructor
+    // using an object here, gives us the ability to easily
+    // check for potential ties before they happen. (yes, like magic)
+    expect(typeof boatAuction.$$biddersCollection).toBe('object');
   });
 
+  // the significance of this function is that it transforms the bidderCollection object into an array
   describe("biddersCollection", function() {
     it("returns an array of the current bidder collection", function() {
       var boatAuction = new Auction();
@@ -26,7 +30,7 @@ describe("Auction", function() {
       expect(boatAuction.biddersCollection()).toEqual([alice])
     });
 
-    it("does not add the bidder to the collecton if there was previously a bidder with the same maximum", function() {
+    it("does not add the bidder to the collecton if there was previously a bidder with the same maximum bid", function() {
       var boatAuction = new Auction();
       var alice = boatAuction.newBidder(2500, 3000, 500);
       var aaron = boatAuction.newBidder(2500, 3000, 500);
@@ -35,11 +39,11 @@ describe("Auction", function() {
       expect(biddersCollection.length).toBe(1);
     });
 
-    it("the maximumBid to be greater than both the startingBid and automaticIncrementAmount", function() {
+    it(" expects the maximumBid to be greater than both the startingBid and automaticIncrementAmount", function() {
       var boatAuction = new Auction();
       expect(function() { var alice = boatAuction.newBidder(2500, 300, 500); }).toThrow();
     });
-    
+
     it("throws an error if the bidder's data is not a number", function() {
       var boatAuction = new Auction();
       expect(function() {var alice = boatAuction.newBidder(2500, 'fish', 500);}).toThrow();
