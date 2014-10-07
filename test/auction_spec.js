@@ -35,7 +35,7 @@ describe("do the intended auction", function() {
         expect(winner.winning_bid).toBe(3001);
       });
       it("boat auction x 2", function() {
-        var boatAuction = new Auction(3000);
+        var boatAuction = new Auction();
         var alice = boatAuction.newBidder(2500, 3000, 500);
         var aaron = boatAuction.newBidder(2800, 3100, 201);
         var amanda = boatAuction.newBidder(2501, 3200, 247);
@@ -43,5 +43,33 @@ describe("do the intended auction", function() {
         var winner = boatAuction.placeBids();
         expect(winner.bidder_id).toBe(aaron.bidder_id);
         expect(winner.winning_bid).toBe(3001);
+      });
+      describe("biddersCollection", function() {
+        it("returns an array of the current bidder collection", function() {
+          var boatAuction = new Auction();
+          var alice = boatAuction.newBidder(2500, 3000, 500);
+          var aaron = boatAuction.newBidder(2800, 3100, 201);
+          var amanda = boatAuction.newBidder(2501, 3200, 247);
+
+          var biddersCollection = boatAuction.biddersCollection();
+          
+          expect(biddersCollection[0]).toBe(alice);
+          expect(biddersCollection[1]).toBe(aaron);
+          expect(biddersCollection[2]).toBe(amanda);
+
+        })
+      });
+      describe("newBidder", function() {
+        it("does not add the bidder to the collecton if there was previously a bidder with the same maximum", function() {
+          var boatAuction = new Auction();
+          var alice = boatAuction.newBidder(2500, 3000, 500);
+          var aaron = boatAuction.newBidder(2500, 3000, 500);
+          
+          var biddersCollection = boatAuction.biddersCollection();
+
+          expect(biddersCollection.length).toBe(1);
+
+        });
+
       });
   }); 
