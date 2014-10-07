@@ -2,7 +2,7 @@
 
 'use strict';
 
-var Auction = function(sellerPrice) {
+var Auction = function() {
     this.$$biddersCollection = {};
     this.$$bidderCount = 0;
 };
