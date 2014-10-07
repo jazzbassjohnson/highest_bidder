@@ -15,14 +15,13 @@ Auction.prototype.newBidder = function(startingBid, maximumBid, automaticIncreme
 
     var BidderConstructor = function() {};
     BidderConstructor.prototype = this;
-    
-    var bidder = new BidderConstructor();
+    var bidder = {};
     bidder.startingBid = startingBid;
     bidder.maximumBid = this.adjustMaximumBid(startingBid, maximumBid, automaticIncrementAmount);
     bidder.automaticIncrementAmount = automaticIncrementAmount;
     bidder.bidder_id = this.serialize();
 
-    // tie breaker
+    
     if(!this.$$biddersCollection[bidder.maximumBid]) {
       this.$$biddersCollection[bidder.maximumBid] = bidder;
     }
@@ -44,10 +43,7 @@ Auction.prototype.serialize = function(){
 
 Auction.prototype.placeBids = function() {
     // convert object to an array
-    var biddersCollection = [];
-    for(var key in this.$$biddersCollection) {
-      biddersCollection.push(this.$$biddersCollection[key]);
-    }
+    var biddersCollection = this.biddersCollection();
 
     var collectionLength = biddersCollection.length;
     if(!collectionLength) {
@@ -105,4 +101,12 @@ Auction.prototype.$findWinner = function(secondHighestBidder, highestBidder) {
     result -= highestBidder.automaticIncrementAmount;
   }
   return result;
+};
+
+Auction.prototype.biddersCollection = function() {
+  var biddersCollection = [];
+  for(var key in this.$$biddersCollection) {
+    biddersCollection.push(this.$$biddersCollection[key]);
+  }
+  return biddersCollection;
 };
