@@ -70,6 +70,12 @@ describe("do the intended auction", function() {
           expect(biddersCollection.length).toBe(1);
 
         });
+        it("the maximumBid to be greater than both the startingBid and automaticIncrementAmount", function() {
+          var boatAuction = new Auction();
+
+          expect(function() { var alice = boatAuction.newBidder(2500, 300, 500); }).toThrow();
+
+        });
 
       });
 
