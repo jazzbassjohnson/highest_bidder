@@ -2,6 +2,11 @@
 
 'use strict';
 
+// This is the Auction constructor
+
+// it contains an object we will store our bidder collection
+// plus a counter that keeps count of the bidders in the collection
+// $$bidderCount is updated every time the serialize function is called
 var Auction = function() {
     this.$$biddersCollection = {};
     this.$$bidderCount = 0;
@@ -16,6 +21,7 @@ Auction.prototype.biddersCollection = function() {
   return biddersCollection;
 };
 
+// creates a new bidder object and if the bidder's maximum bid is unique, the bidder is stored in a collection
 Auction.prototype.newBidder = function(startingBid, maximumBid, automaticIncrementAmount) {
     // check for valid input parameters
     if(typeof startingBid !== 'number' || typeof maximumBid !== 'number' || typeof automaticIncrementAmount !== 'number') {
@@ -44,13 +50,14 @@ Auction.prototype.$adjustMaximumBid = function(startingBid, maximumBid, automati
   return maximumBid - ((maximumBid - startingBid ) % automaticIncrementAmount);
 };
 
-
+// gives each bidder a unique id number
 Auction.prototype.$serialize = function(){
     var id = this.$$bidderCount;
     this.$$bidderCount++;
     return id;
 };
 
+// returns a winner object after comparing the bidders in the bidderCollection
 Auction.prototype.placeBids = function() {
     // convert object to an array
     var biddersCollection = this.biddersCollection();
@@ -79,6 +86,7 @@ Auction.prototype.placeBids = function() {
     return winner;
 };
 
+// returns the bidder object with the highest maximumbid
 Auction.prototype.$findHighestBidder = function(biddersCollection) {
   var sortedCollection = biddersCollection.sort(function(a,b){return a.maximumBid - b.maximumBid;});
   var currentHighestBidder = sortedCollection[sortedCollection.length - 1];
@@ -86,6 +94,7 @@ Auction.prototype.$findHighestBidder = function(biddersCollection) {
   return currentHighestBidder;
 };
 
+// returns the bidder object with the second highest maximumbid
 Auction.prototype.$findSecondHighestBidder = function(biddersCollection, highestBid) {
   var sortedCollection = biddersCollection.sort(function(a,b){return a.maximumBid - b.maximumBid;});
   
@@ -97,6 +106,7 @@ Auction.prototype.$findSecondHighestBidder = function(biddersCollection, highest
   return null;
 };
 
+// compares secondhighest bidder and the highest bidder to determine the amount of the winning bid (returns the winngin bid)
 Auction.prototype.$findWinningBid = function(secondHighestBidder, highestBidder) {
   var result = highestBidder.maximumBid;
   var secondMaxBid = secondHighestBidder.maximumBid;
