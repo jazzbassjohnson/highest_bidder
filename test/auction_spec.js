@@ -72,4 +72,14 @@ describe("do the intended auction", function() {
         });
 
       });
+
+      describe("adjustMaximumBid", function() {
+        it("adjusts the bidder's maximum bid based on their specifications", function() {
+        var boatAuction = new Auction();
+        var alice = boatAuction.newBidder(2500, 3100, 500);
+        expect(alice.maximumBid).toBe(3000);
+        });
+      });
+
+
   }); 
