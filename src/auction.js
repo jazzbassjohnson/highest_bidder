@@ -7,6 +7,15 @@ var Auction = function(sellerPrice) {
     this.$$bidderCount = 0;
 };
 
+// returns the collection of bidders as an array
+Auction.prototype.biddersCollection = function() {
+  var biddersCollection = [];
+  for(var key in this.$$biddersCollection) {
+    biddersCollection.push(this.$$biddersCollection[key]);
+  }
+  return biddersCollection;
+};
+
 Auction.prototype.newBidder = function(startingBid, maximumBid, automaticIncrementAmount) {
     // check for valid input parameters
     if(typeof startingBid !== 'number' || typeof maximumBid !== 'number' || typeof automaticIncrementAmount !== 'number') {
@@ -65,7 +74,7 @@ Auction.prototype.placeBids = function() {
 
     var winner = {};
     winner.bidder_id = highestBidder.bidder_id;
-    winner.winning_bid = this.$findWinner(secondHighestBidder, highestBidder);
+    winner.winning_bid = this.$findWinningBid(secondHighestBidder, highestBidder);
   
     return winner;
 };
@@ -88,7 +97,7 @@ Auction.prototype.$findSecondHighestBidder = function(biddersCollection, highest
   return null;
 };
 
-Auction.prototype.$findWinner = function(secondHighestBidder, highestBidder) {
+Auction.prototype.$findWinningBid = function(secondHighestBidder, highestBidder) {
   var result = highestBidder.maximumBid;
   var secondMaxBid = secondHighestBidder.maximumBid;
 
@@ -104,10 +113,3 @@ Auction.prototype.$findWinner = function(secondHighestBidder, highestBidder) {
   return result;
 };
 
-Auction.prototype.biddersCollection = function() {
-  var biddersCollection = [];
-  for(var key in this.$$biddersCollection) {
-    biddersCollection.push(this.$$biddersCollection[key]);
-  }
-  return biddersCollection;
-};
