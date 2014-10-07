@@ -77,6 +77,14 @@ describe("Auction", function() {
 
       expect(function() { return boatAuction.placeBids();}).toThrow();
     });
+    it("returns the bidders startingBid if there was only one bidder in the auction", function() {
+      var boatAuction = new Auction();
+      var alice = boatAuction.newBidder(2500, 3000, 500);
+
+      var winner = boatAuction.placeBids();
+
+      expect(winner.winning_bid).toBe(2500);
+    });
   });
 
   describe("$findHighestBidder", function() {
