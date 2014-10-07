@@ -62,7 +62,7 @@ Auction.prototype.placeBids = function() {
 
     if(collectionLength === 1) {
         return {
-            winning_bid: this.$$sellerPrice,
+            winning_bid: biddersCollection[0].startingBid,
             bidder_id: 0
         };
     }
