@@ -16,7 +16,7 @@ describe("Auction", function() {
   describe("biddersCollection", function() {
     it("returns an array of the current bidder collection", function() {
       var boatAuction = new Auction();
-      var biddersCollection = boatAuction.biddersCollection();
+      var biddersCollection = boatAuction.$biddersCollection();
       
       expect(biddersCollection).toEqual([]);
     })
@@ -27,14 +27,14 @@ describe("Auction", function() {
       var boatAuction = new Auction();
       var alice = boatAuction.newBidder(2500, 3000, 500);
 
-      expect(boatAuction.biddersCollection()).toEqual([alice])
+      expect(boatAuction.$biddersCollection()).toEqual([alice])
     });
 
     it("does not add the bidder to the collecton if there was previously a bidder with the same maximum bid", function() {
       var boatAuction = new Auction();
       var alice = boatAuction.newBidder(2500, 3000, 500);
       var aaron = boatAuction.newBidder(2500, 3000, 500);
-      var biddersCollection = boatAuction.biddersCollection();
+      var biddersCollection = boatAuction.$biddersCollection();
 
       expect(biddersCollection.length).toBe(1);
     });
@@ -92,7 +92,7 @@ describe("Auction", function() {
       var alice = boatAuction.newBidder(2500, 3000, 500);
       var aaron = boatAuction.newBidder(2800, 3100, 201);
       var amanda = boatAuction.newBidder(2501, 3200, 247);
-      var biddersCollection = boatAuction.biddersCollection();
+      var biddersCollection = boatAuction.$biddersCollection();
 
       expect( boatAuction.$findHighestBidder(biddersCollection) ).toBe(aaron);//
     });
@@ -104,7 +104,7 @@ describe("Auction", function() {
       var alice = boatAuction.newBidder(2500, 3000, 500);
       var aaron = boatAuction.newBidder(2800, 3100, 201); // after adjustments, aaron has the largest maximum bid
       var amanda = boatAuction.newBidder(2501, 3200, 247);
-      var biddersCollection = boatAuction.biddersCollection();
+      var biddersCollection = boatAuction.$biddersCollection();
 
       expect( boatAuction.$findSecondHighestBidder(biddersCollection, aaron.maximumBid) ).toBe(alice);
     });
