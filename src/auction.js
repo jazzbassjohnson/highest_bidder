@@ -13,7 +13,7 @@ var Auction = function() {
 };
 
 // returns the collection of bidders as an array
-Auction.prototype.biddersCollection = function() {
+Auction.prototype.$biddersCollection = function() {
   var biddersCollection = [];
   for(var key in this.$$biddersCollection) {
     biddersCollection.push(this.$$biddersCollection[key]);
@@ -60,7 +60,7 @@ Auction.prototype.$serialize = function(){
 // returns a winner object after comparing the bidders in the bidderCollection
 Auction.prototype.placeBids = function() {
     // convert object to an array
-    var biddersCollection = this.biddersCollection();
+    var biddersCollection = this.$biddersCollection();
 
     var collectionLength = biddersCollection.length;
     if(!collectionLength) {
@@ -98,6 +98,8 @@ Auction.prototype.$findHighestBidder = function(biddersCollection) {
 Auction.prototype.$findSecondHighestBidder = function(biddersCollection, highestBid) {
   var sortedCollection = biddersCollection.sort(function(a,b){return a.maximumBid - b.maximumBid;});
   
+  // iterate over the collection and determine the bideer with the highest
+  // maximum bid as long as it isn't the first highest bid
   for(var i = biddersCollection.length-1; i >= 0; i--) {
     if(sortedCollection[i].maximumBid !== highestBid) {
       return sortedCollection[i];
@@ -111,7 +113,9 @@ Auction.prototype.$findWinningBid = function(secondHighestBidder, highestBidder)
   var result = highestBidder.maximumBid;
   var secondMaxBid = secondHighestBidder.maximumBid;
 
-  var tie = highestBidder.bidder_id > secondHighestBidder.bidder_id;
+  // if the first highest bidder was entered into the auction first, the first highest bidder wins in the case of a tie
+  var tie = highestBidder.bidder_id < secondHighestBidder.bidder_id;
+  
   var automaticIncrementAmount = highestBidder.automaticIncrementAmount;
   
   while((result - automaticIncrementAmount) > secondMaxBid) {
